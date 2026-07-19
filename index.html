@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>supabase</title>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="img/flash.png" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- header -->
+    <header>
+      <div
+        class="container width-100 flex-space-between header-block flex-center"
+      >
+        <div class="gap-block-16px">
+          <a href="#"
+            ><img class="reverse" src="img/logo.png" alt="" class="logo"
+          /></a>
+
+          <button
+            onblur="visible(this)"
+            onfocus="visible(this)"
+            class="dropbase-menu"
+          >
+            <h2 class="dropbase-menu-title flex-center">
+              Product <img class="reverse" src="img/arrow_bottom.png" alt="" />
+            </h2>
+            <div class="dropbase-menu-subblock none">
+              <a href="#" class="dropbase-menu-link">Database</a>
+              <a href="#" class="dropbase-menu-link">Authentication</a>
+              <a href="#" class="dropbase-menu-link">Storage</a>
+              <a href="#" class="dropbase-menu-link">Functions Coming soon</a>
+              <a href="#" class="dropbase-menu-link">Pricing</a>
+            </div>
+          </button>
+
+          <button
+            onblur="visible(this)"
+            onfocus="visible(this)"
+            class="dropbase-menu"
+          >
+            <h2 class="dropbase-menu-title flex-center">
+              Developers
+              <img class="reverse" src="img/arrow_bottom.png" alt="" />
+            </h2>
+            <div class="dropbase-menu-subblock none">
+              <a href="#" class="dropbase-menu-link">Documentation</a>
+              <a href="#" class="dropbase-menu-link">API Reference</a>
+              <a href="#" class="dropbase-menu-link">Guides</a>
+            </div>
+          </button>
+
+          <a href="#" class="grey-link">Beta</a>
+          <a href="#" class="grey-link">Pricing</a>
+        </div>
+
+        <div class="gap-block-8px flex-center">
+          <button class="green-button">Start your project</button>
+          <a href="#" onclick="auth();" class="white-link-button">Sign in</a>
+        </div>
+      </div>
+    </header>
+    <!-- header -->
+
+    <!-- authorization -->
+    <div class="modal-block flex-center-auth-reg auth-block none">
+      <div onclick="auth();" class="block-for-close"></div>
+      <div class="modal-subblock flex-column auth-subblock">
+        <form class="modal-form gap-block-5px flex-column" method="post">
+          <h2 class="modal-block-title">Authorization</h2>
+          <div class="width-100">
+            <input
+              class="input"
+              type="text"
+              name="authLogin"
+              id="authLogin"
+              maxlength="50"
+              placeholder="Login"
+            />
+            <p id="login-error" class="input-error-text none">login is empty</p>
+          </div>
+          <div class="width-100">
+            <input
+              class="input"
+              type="password"
+              id="authPassword"
+              maxlength="50"
+              name="authPassword"
+              placeholder="Password"
+            />
+            <p id="password-error" class="input-error-text none">
+              password is empty
+            </p>
+          </div>
+          <input
+            class="unactive-button top-modal-button modal-button"
+            type="button"
+            id="button-form-submit"
+            value="Sign in"
+          />
+        </form>
+        <button onclick="reg(); auth();" class="modal-button">
+          Registration
+        </button>
+      </div>
+    </div>
+    <!-- authorization -->
+
+    <!-- registration -->
+    <div class="modal-block flex-center-auth-reg reg-block none">
+      <div onclick="reg();" class="block-for-close"></div>
+      <div class="modal-subblock flex-column reg-subblock gap-block-5px">
+        <form class="modal-form gap-block-5px flex-column" method="post">
+          <h2 class="modal-block-title">Registration</h2>
+          <div class="width-100">
+            <input
+              class="input"
+              type="text"
+              name="regLogin"
+              id="regLogin"
+              maxlength="50"
+              placeholder="Login"
+            />
+            <p id="reg-login-error" class="input-error-text none">
+              login is empty
+            </p>
+          </div>
+
+          <div class="width-100">
+            <input
+              class="input"
+              type="password"
+              name="regPassword"
+              id="regPassword"
+              maxlength="50"
+              placeholder="Password"
+            />
+            <p id="reg-password-error" class="input-error-text none">
+              password is empty
+            </p>
+            <p id="reg-password-length-error" class="input-error-text none">
+              Password must be more than 8 characters long
+            </p>
+          </div>
+
+          <div class="width-100">
+            <input
+              class="input"
+              type="password"
+              maxlength="50"
+              id="passwordRepeat"
+              name="regPasswordRepeat"
+              placeholder="Repeat password"
+            />
+            <p id="password-reapeat-error" class="input-error-text none">
+              The passwords do not match
+            </p>
+          </div>
+
+          <p class="reg-text">
+            I accept the terms
+            <a class="reg-link" href="docs/termsOfUse.pdf">user agreement</a>
+            and
+            <a class="reg-link" href="docs/privacyPolicy.pdf">privacy policy</a>
+          </p>
+          <input
+            class="unactive-button top-modal-button modal-button reg-button"
+            id="reg-button-form-submit"
+            type="button"
+            value="Зарегистрироваться"
+          />
+        </form>
+      </div>
+    </div>
+    <!-- registration -->
+
+    <!-- main -->
+    <main>
+      <!-- banner -->
+      <div class="my-120 container flex-space-between banner">
+        <div class="left-banner-block flex-column gap-block-16px">
+          <div class="gap-block-8px flex-center">
+            <img class="reverse" src="img/drop.png" alt="" />
+            <h2 class="p-bold-white">Storage</h2>
+          </div>
+
+          <h1 class="main-title banner-title">
+            Store and serve <br />
+            any type of digital content
+          </h1>
+
+          <p class="banner-p">
+            An open source Object store service with unlimited scalability, for
+            any file type.
+          </p>
+          <p class="banner-p">
+            With custom policies and permissions that are familiar and easy to
+            implement.
+          </p>
+
+          <button class="green-button button-banner">Start a project</button>
+        </div>
+
+        <div class="slider">
+          <img
+            class="slide active right-banner-block"
+            src="img/image1.png"
+            alt=""
+          />
+          <img class="slide right-banner-block" src="img/image2.png" alt="" />
+          <img class="slide right-banner-block" src="img/image3.jpg" alt="" />
+          <img class="slide right-banner-block" src="img/image4.png" alt="" />
+          <img class="slide right-banner-block" src="img/image6.webp" alt="" />
+        </div>
+      </div>
+      <!-- banner -->
+
+      <!-- advantages -->
+      <div class="my-120 container flex-space-between">
+        <!-- card -->
+        <div class="advantages-card flex-column gap-block-16px">
+          <img
+            class="reverse"
+            src="img/icon_advantages1.png"
+            alt=""
+            class="advantages-img"
+          />
+          <h2 class="advantages-title">Interoperable</h2>
+          <p class="p-medium">
+            Integrates well with the rest of Supabase ecosystem, including Auth
+            and Postgres.
+          </p>
+        </div>
+        <!-- card -->
+
+        <!-- card -->
+        <div class="advantages-card flex-column gap-block-16px">
+          <img src="img/icon_advantages2.png" alt="" class="advantages-img" />
+          <h2 class="advantages-title">Lightning fast</h2>
+          <p class="p-medium">
+            Thin API server layer that leverages Postgres' permissions and
+            performance.
+          </p>
+        </div>
+        <!-- card -->
+
+        <!-- card -->
+        <div class="advantages-card flex-column gap-block-16px">
+          <img src="img/icon_advantages3.png" alt="" class="advantages-img" />
+          <h2 class="advantages-title">Dependable</h2>
+          <p class="p-low">Enterprise-level scalability and durability.</p>
+        </div>
+        <!-- card -->
+      </div>
+      <!-- advantages -->
+
+      <!-- dashboard -->
+      <div class="my-120 gap-block-16px container flex-column">
+        <h2 class="main-title">Sleek dashboard for managing your media</h2>
+        <p class="p-medium">
+          A complete Object Explorer so that any of your team can use.
+        </p>
+        <p class="p-low">
+          Drag and drop uploading, moving objects, and multiple object
+          selection. As easy as working on your desktop.
+        </p>
+        <div class="flex-space-between dashboard-subblock">
+          <div class="left-dashboard gap-block-16px flex-column">
+            <div class="gap-block-16px">
+              <button
+                onclick="tabIndexSelect('img/image2.png', 0)"
+                class="dashboard-button dashboard-button-active"
+              >
+                File previews
+              </button>
+              <button
+                onclick="tabIndexSelect('img/image3.jpg', 1)"
+                class="dashboard-button"
+              >
+                Column view
+              </button>
+              <button
+                onclick="tabIndexSelect('img/image4.png', 2)"
+                class="dashboard-button"
+              >
+                List view
+              </button>
+              <button
+                onclick="tabIndexSelect('img/image5.png', 3)"
+                class="dashboard-button"
+              >
+                Multi select actions
+              </button>
+              <button
+                onclick="tabIndexSelect('img/image6.webp', 4)"
+                class="dashboard-button"
+              >
+                Path navigator
+              </button>
+            </div>
+            <img class="dashboard-img" src="img/image2.png" alt="" />
+          </div>
+
+          <div class="rigth-flex-block">
+            <div
+              class="right-dashboard gap-block-16px flex-column right-active"
+            >
+              <p class="p-bold-white">File previews</p>
+              <p class="p-medium padding-text">
+                Preview any media type, including video and audio.
+              </p>
+              <div class="right-dashboard-block gap-block-16px flex-column">
+                <p class="p-bold-white">Check out our example app</p>
+                <div
+                  class="right-dashboard-subblock-one flex-column gap-block-16px"
+                >
+                  <p class="p-bold-white">Profile management example</p>
+                  <p class="p-low">
+                    Update a user account with public profile information,
+                    including uploading a profile image.
+                  </p>
+                  <p class="p-low gap-block-8px flex-center">
+                    Created by:<img src="img/flash.png" alt="" />supabase
+                  </p>
+                </div>
+                <p class="p-low paddin-20px-left flex-center gap-block-8px">
+                  nextjs-ts-user-management <img src="img/cat.png" alt="" />
+                </p>
+                <button class="right-dashboard-button paddin-20px-left">
+                  <img src="img/button.svg" alt="" />
+                </button>
+                <div class="line"></div>
+              </div>
+            </div>
+
+            <div class="right-dashboard gap-block-16px flex-column">
+              <p class="p-bold-white">Column view</p>
+              <p class="p-medium padding-text">
+                A hierarchical display that presents folders and files in
+                columns.
+              </p>
+              <div class="right-dashboard-block gap-block-16px flex-column">
+                <p class="p-bold-white">Check out our example app</p>
+                <div
+                  class="right-dashboard-subblock-one flex-column gap-block-16px"
+                >
+                  <p class="p-bold-white">Profile management example</p>
+                  <p class="p-low">
+                    Update a user account with public profile information,
+                    including uploading a profile image.
+                  </p>
+                  <p class="p-low gap-block-8px flex-center">
+                    Created by:<img src="img/flash.png" alt="" />supabase
+                  </p>
+                </div>
+                <p class="p-low paddin-20px-left flex-center gap-block-8px">
+                  nextjs-ts-user-management <img src="img/cat.png" alt="" />
+                </p>
+                <button class="right-dashboard-button paddin-20px-left">
+                  <img src="img/button.svg" alt="" />
+                </button>
+                <div class="line"></div>
+              </div>
+            </div>
+
+            <div class="right-dashboard gap-block-16px flex-column">
+              <p class="p-bold-white">List view</p>
+              <p class="p-medium padding-text">
+                A format displaying files and folders in a linear list.
+              </p>
+              <div class="right-dashboard-block gap-block-16px flex-column">
+                <p class="p-bold-white">Check out our example app</p>
+                <div
+                  class="right-dashboard-subblock-one flex-column gap-block-16px"
+                >
+                  <p class="p-bold-white">Profile management example</p>
+                  <p class="p-low">
+                    Update a user account with public profile information,
+                    including uploading a profile image.
+                  </p>
+                  <p class="p-low gap-block-8px flex-center">
+                    Created by:<img src="img/flash.png" alt="" />supabase
+                  </p>
+                </div>
+                <p class="p-low paddin-20px-left flex-center gap-block-8px">
+                  nextjs-ts-user-management <img src="img/cat.png" alt="" />
+                </p>
+                <button class="right-dashboard-button paddin-20px-left">
+                  <img src="img/button.svg" alt="" />
+                </button>
+                <div class="line"></div>
+              </div>
+            </div>
+
+            <div class="right-dashboard gap-block-16px flex-column">
+              <p class="p-bold-white">Multi select actions</p>
+              <p class="p-medium padding-text">
+                A capability that allows users to select multiple files or
+                folders simultaneously.
+              </p>
+              <div class="right-dashboard-block gap-block-16px flex-column">
+                <p class="p-bold-white">Check out our example app</p>
+                <div
+                  class="right-dashboard-subblock-one flex-column gap-block-16px"
+                >
+                  <p class="p-bold-white">Profile management example</p>
+                  <p class="p-low">
+                    Update a user account with public profile information,
+                    including uploading a profile image.
+                  </p>
+                  <p class="p-low gap-block-8px flex-center">
+                    Created by:<img src="img/flash.png" alt="" />supabase
+                  </p>
+                </div>
+                <p class="p-low paddin-20px-left flex-center gap-block-8px">
+                  nextjs-ts-user-management <img src="img/cat.png" alt="" />
+                </p>
+                <button class="right-dashboard-button paddin-20px-left">
+                  <img src="img/button.svg" alt="" />
+                </button>
+                <div class="line"></div>
+              </div>
+            </div>
+
+            <div class="right-dashboard gap-block-16px flex-column">
+              <p class="p-bold-white">Path navigator</p>
+              <p class="p-medium padding-text">
+                A visual representation or tool that shows the user’s current
+                location in the file system hierarchy.
+              </p>
+              <div class="right-dashboard-block gap-block-16px flex-column">
+                <p class="p-bold-white">Check out our example app</p>
+                <div
+                  class="right-dashboard-subblock-one flex-column gap-block-16px"
+                >
+                  <p class="p-bold-white">Profile management example</p>
+                  <p class="p-low">
+                    Update a user account with public profile information,
+                    including uploading a profile image.
+                  </p>
+                  <p class="p-low gap-block-8px flex-center">
+                    Created by:<img src="img/flash.png" alt="" />supabase
+                  </p>
+                </div>
+                <p class="p-low paddin-20px-left flex-center gap-block-8px">
+                  nextjs-ts-user-management <img src="img/cat.png" alt="" />
+                </p>
+                <button class="right-dashboard-button paddin-20px-left">
+                  <img src="img/button.svg" alt="" />
+                </button>
+                <div class="line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- dashboard -->
+
+      <!-- faq -->
+      <div class="my-120 container flex-column gap-block-32px">
+        <h2 class="main-title">
+          Integrates natively <br />
+          with Supabase Auth
+        </h2>
+        <!-- questions -->
+        <div
+          tabindex="1"
+          onblur="visible(this)"
+          onfocus="visible(this)"
+          class="faq-questions"
+        >
+          <div class="faq-question-title flex-space-between">
+            <p class="p-low">
+              Using Postgres Row Level Security to create Object access rules.
+            </p>
+            <img class="reverse" src="img/arrow_bottom.png" alt="" />
+          </div>
+          <div class="faq-question-answer none">
+            <p class="p-low">
+              Storage Authorization is built around Postgres so that you can use
+              any combination of SQL, Postgres functions, and even your own
+              metadata to write policies.Storage Authorization is built around
+              Postgres so that you can use any combination of SQL, Postgres
+              functions, and even your own metadata to write policies.Storage is
+              built around Postgres so that you can use any combination of SQL,
+              Postgres functions, and even your own metadata to write policies.
+            </p>
+            <button class="faq-button gap-block-8px">
+              <img class="reverse" src="img/arrow.png" alt="" />
+              Expore documentation
+            </button>
+          </div>
+        </div>
+        <!-- questions -->
+
+        <!-- questions -->
+        <div
+          tabindex="2"
+          onblur="visible(this)"
+          onfocus="visible(this)"
+          class="faq-questions"
+        >
+          <div class="faq-question-title flex-space-between">
+            <p class="p-low">
+              Using Postgres Row Level Security to create Object access rules.
+            </p>
+            <img class="reverse" src="img/arrow_bottom.png" alt="" />
+          </div>
+          <div class="faq-question-answer none">
+            <p class="p-low">
+              Storage Authorization is built around Postgres so that you can use
+              any combination of SQL, Postgres functions, and even your own
+              metadata to write policies.Storage Authorization is built around
+              Postgres so that you can use any combination of SQL, Postgres
+              functions, and even your own metadata to write policies.Storage is
+              built around Postgres so that you can use any combination of SQL,
+              Postgres functions, and even your own metadata to write policies.
+            </p>
+            <button class="faq-button gap-block-8px">
+              <img class="reverse" src="img/arrow.png" alt="" />
+              Expore documentation
+            </button>
+          </div>
+        </div>
+        <!-- questions -->
+
+        <!-- questions -->
+        <div
+          tabindex="3"
+          onblur="visible(this)"
+          onfocus="visible(this)"
+          class="faq-questions"
+        >
+          <div class="faq-question-title flex-space-between">
+            <p class="p-low">
+              Using Postgres Row Level Security to create Object access rules.
+            </p>
+            <img class="reverse" src="img/arrow_bottom.png" alt="" />
+          </div>
+          <div class="faq-question-answer none">
+            <p class="p-low">
+              Storage Authorization is built around Postgres so that you can use
+              any combination of SQL, Postgres functions, and even your own
+              metadata to write policies.Storage Authorization is built around
+              Postgres so that you can use any combination of SQL, Postgres
+              functions, and even your own metadata to write policies.Storage is
+              built around Postgres so that you can use any combination of SQL,
+              Postgres functions, and even your own metadata to write policies.
+            </p>
+            <button class="faq-button gap-block-8px">
+              <img class="reverse" src="img/arrow.png" alt="" />
+              Expore documentation
+            </button>
+          </div>
+        </div>
+        <!-- questions -->
+
+        <!-- questions -->
+        <div
+          tabindex="4"
+          onblur="visible(this)"
+          onfocus="visible(this)"
+          class="faq-questions"
+        >
+          <div class="faq-question-title flex-space-between">
+            <p class="p-low">
+              Using Postgres Row Level Security to create Object access rules.
+            </p>
+            <img class="reverse" src="img/arrow_bottom.png" alt="" />
+          </div>
+          <div class="faq-question-answer none">
+            <p class="p-low">
+              Storage Authorization is built around Postgres so that you can use
+              any combination of SQL, Postgres functions, and even your own
+              metadata to write policies.Storage Authorization is built around
+              Postgres so that you can use any combination of SQL, Postgres
+              functions, and even your own metadata to write policies.Storage is
+              built around Postgres so that you can use any combination of SQL,
+              Postgres functions, and even your own metadata to write policies.
+            </p>
+            <button class="faq-button gap-block-8px">
+              <img class="reverse" src="img/arrow.png" alt="" />
+              Expore documentation
+            </button>
+          </div>
+        </div>
+        <!-- questions -->
+      </div>
+      <!-- faq -->
+    </main>
+    <!-- main -->
+
+    <!-- footer -->
+    <footer class="my-120 container width-100 flex-column">
+      <div class="width-100 footer-block flex-space-between gap-block-32px">
+        <div class="footer-logo-block flex-column gap-block-32px">
+          <img src="img/logo.png" alt="" class="footer-logo reverse" />
+          <div class="gap-block-16px">
+            <img src="img/twitter.png" alt="" />
+            <img src="img/git.png" alt="" />
+          </div>
+        </div>
+
+        <div class="flex-space-between gap-block-32px">
+          <!-- footer-links -->
+          <div class="footer-links flex-column gap-block-12px">
+            <h2 class="footer-link-title">Product</h2>
+            <a class="p-low" href="#">Database</a>
+            <a class="p-low" href="#">Authentication</a>
+            <a class="p-low" href="#">Storage</a>
+            <a class="p-low" href="#"
+              >Functions <br />
+              Coming soon</a
+            >
+            <a class="p-low" href="#">Pricing</a>
+          </div>
+          <!-- footer-links -->
+
+          <!-- footer-links -->
+          <div class="footer-links flex-column gap-block-12px">
+            <h2 class="footer-link-title">Resources</h2>
+            <a class="p-low" href="#">Support</a>
+            <a class="p-low" href="#">Case Studies</a>
+            <a class="p-low" href="#">System Status</a>
+            <a class="p-low" href="#">Terms of service</a>
+          </div>
+          <!-- footer-links -->
+
+          <!-- footer-links -->
+          <div class="footer-links flex-column gap-block-12px">
+            <h2 class="footer-link-title">Developers</h2>
+            <a class="p-low" href="#">Documentation</a>
+            <a class="p-low" href="#">API Reference</a>
+            <a class="p-low" href="#">Guides</a>
+          </div>
+          <!-- footer-links -->
+
+          <!-- footer-links -->
+          <div class="footer-links flex-column gap-block-12px">
+            <h2 class="footer-link-title">Company</h2>
+            <a class="p-low" href="#">Blog</a>
+            <a class="p-low" href="#">Open Source</a>
+            <a class="p-low" href="#">Humans.txt</a>
+            <a class="p-low" href="#">Lawyers.txt</a>
+          </div>
+          <!-- footer-links -->
+        </div>
+      </div>
+      <div class="footer-line line"></div>
+      <div class="footer-block flex-space-between">
+        <a href="#" class="footer-link-title copy-title"> © Supabase Inc </a>
+        <div class="theme-block">
+          <img src="img/sun.png" alt="" />
+          <div onclick="themeSwap(this)" class="theme-toggle-wraper">
+            <div class="theme-toggle"></div>
+          </div>
+          <img src="img/moon.png" alt="" />
+        </div>
+      </div>
+    </footer>
+    <!-- footer -->
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
